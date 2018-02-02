@@ -85,7 +85,6 @@ foreign key (typ_id) references type_annonce (id)
 
 INSERT INTO carcassonneimmo.client (cli_nom, cli_prenom, cli_tel) VALUES ('Jean', 'Robert', '0606060606');
 
-INSERT INTO carcassonneimmo.admin (adm_nom, adm_prenom, adm_tel, username, username_canonical, email, email_canonical, enabled, salt, password, last_login, confirmation_token, password_requested_at, roles) VALUES ('tezer', 'hey', 'efzvz', 'test', 'test', 'test@gmail.com', 'test@gmail.com', 1, null, '$2y$13$jUPywcJbfdi7XA5owJnSO.h0/APJwPRSCH4vBMW2U8aWpBmctJNbW', '2018-02-01 14:25:48', null, null, 'a:0:{}');
 INSERT INTO carcassonneimmo.admin (adm_nom, adm_prenom, adm_tel, username, username_canonical, email, email_canonical, enabled, salt, password, last_login, confirmation_token, password_requested_at, roles) VALUES ('Test', 'preTest', '0606060606', 'admin', 'admin', 'admin@admin.com', 'admin@admin.com', 1, null, '$2y$13$96eb4Nr5VH8bTyIsD51f8e/wrP0nWrVFNgDTzgvN7T6XLuKk74NJe', '2018-02-01 14:43:17', null, null, 'a:1:{i:0;s:16:"ROLE_SUPER_ADMIN";}');
 
 INSERT INTO carcassonneimmo.type_annonce (typ_type) VALUES ('Vente');
