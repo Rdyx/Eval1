@@ -1,0 +1,11 @@
+.inlined {
+    display: flex;
+    align-items: center;
+    text-align: left;
+}
+
+.inlinedIndex {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}

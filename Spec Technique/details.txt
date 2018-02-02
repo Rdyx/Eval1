@@ -1,0 +1,12 @@
+Lien github : https://github.com/Rdyx/Eval1
+============================================
+
+Pourquoi avoir utilisé symfony ?
+
+Rapidité et efficacité. L'utilisation du pattern MVC permet de gagner en temps et symfony le gère en grande partie.
+Ce framework peut aussi être utilisé avec des bundles pour éviter les tâches fastidieuses de vérification/design de certaines parties.
+
+Par exemple :
+    - FOSUserBundle permet de gérer la création et l'édition de comptes utilisateurs.
+    - EasyAdmin permet de faire un backoffice rapide et clair. De plus, il est complatible avec FOSUserBundle.
+    - VichUploader permet de stocker les images sur le serveur directement.

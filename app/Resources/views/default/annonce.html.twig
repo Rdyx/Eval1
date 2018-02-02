@@ -1,0 +1,46 @@
+{% extends 'base.html.twig' %}
+{% block body %}
+    <div class="container">
+        <div class="d-flex justify-content-around mb-2">
+
+        {{ form_start(form, { 'attr': { 'class': 'form-inline my-2 my-lg-0' }}) }}
+        {{ form_label(form.search, ' ')}}
+        {{ form_widget(form.search, {'attr' : { 'class': 'form-control mr-sm-2', 'placeholder': 'Chercher une annonce' }}) }}
+        {{ form_label(form.searchTypeAnn, ' ' )}}
+        {{ form_widget(form.searchTypeAnn, {'attr' : { 'class': 'form-control mr-sm-2'}}) }}
+
+
+        <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Rechercher</button>
+        {{ form_end(form) }}
+        </div>
+        {% for ann in annonces %}
+            <div class="row text-center border mb-2">
+                <div class="col-3 inlinedIndex">
+                    <img class='img-fluid' src="/uploads/images/annonces/{{ ann.annPhoto }}" alt="">
+                </div>
+                <div class="col-3 inlinedIndex">
+                    <ul class="list-unstyled">
+                        <li>
+                            <a href="{{ path('selectAnnonce', {'id': ann.id }) }}"><h1>{{ ann.annTitre }}</h1></a>
+                        </li>
+                    </ul>
+                </div>
+                <div class="col-3 inlinedIndex">
+                    <ul class="list-unstyled">
+                        <li>
+                            <h1>{{ ann.annNbpieces }} pièces</h1>
+                        </li>
+                    </ul>
+                </div>
+                <div class="col-3 inlinedIndex">
+                    <ul class="list-unstyled">
+                        <li>
+                            <h1>{{ ann.annPrix }} €</h1>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        {% endfor %}
+
+    </div>
+{% endblock %}

@@ -2,20 +2,92 @@
 
 namespace AppBundle\Controller;
 
+use AppBundle\Entity\Annonce;
+use AppBundle\Entity\TypeAnnonce;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
+use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\Form\Extension\Core\Type\SearchType;
 
 class DefaultController extends Controller
 {
     /**
      * @Route("/", name="homepage")
      */
-    public function indexAction(Request $request)
+    public function indexAction()
     {
-        // replace this example code with whatever you need
-        return $this->render('default/index.html.twig', [
-            'base_dir' => realpath($this->getParameter('kernel.project_dir')).DIRECTORY_SEPARATOR,
-        ]);
+        return $this->redirectToRoute('annonces');
+    }
+
+    /**
+     * @Route("/annonces", name="annonces")
+     */
+    public function annonceAction(Request $request)
+    {
+        $em = $this->getDoctrine()->getManager();
+
+        $searchType = $em->getRepository('AppBundle:TypeAnnonce')->findAll();
+
+        $form = $this->createFormBuilder()
+            ->add('search', SearchType::class,
+                array('required' => false))
+            ->add('searchTypeAnn', ChoiceType::class,
+                [
+                    'choices' => [
+                        '',
+                        'Catégories' => $searchType
+                    ],
+                    'choice_label' => function($type, $key) {
+                        if($type === '' ){
+                            return 'Toutes les catégories';
+                        }
+                        /* @var TypeAnnonce $type */
+                        return $type->getType();
+                    }
+                ]
+            )
+            ->getForm();
+        $form->handleRequest($request);
+
+        if($form->isSubmitted() && $form->isValid())
+        {
+            $data = $form->getData();
+            $search = $data['search'];
+            $searchTypeAnn = $data['searchTypeAnn'];
+            $query = $em->createQuery('
+            SELECT a FROM AppBundle:Annonce a JOIN a.typeAnn t WHERE t.type LIKE :sl AND a.annTitre LIKE :s
+            ')
+
+                ->setParameter('s', '%'.$search.'%')
+                ->setParameter('sl', '%'.$searchTypeAnn.'%');
+            $annonces = $query->getResult();
+        } else {
+            $annonces = $em->getRepository('AppBundle:Annonce')->findAll();
+        }
+
+        return $this->render('default/annonce.html.twig', array(
+            'form' => $form->createView(),
+            'searchType' => $searchType,
+            'annonces' => $annonces,
+        ));
+    }
+
+    /**
+     * @Route ("/annonce/{id}", name="selectAnnonce", requirements={"id"="\d+"})
+     */
+    public function selectAnnonceAction($id)
+    {
+        $annonce = $this->getDoctrine()
+            ->getRepository(Annonce::class)->find($id);
+
+        if(empty($annonce))
+        {
+            return $this->redirectToRoute('homepage');
+        } else {
+            return $this->render('default/selectAnnonce.html.twig', array(
+                'annonce' => $annonce
+            ));
+        }
     }
 }

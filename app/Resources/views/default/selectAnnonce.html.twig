@@ -1,0 +1,38 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+
+    <div class="container">
+        <div class="mb-2 inlinedIndex">
+            <img class='img-fluid col-7' src="/uploads/images/annonces/{{ annonce.annPhoto }}" alt="">
+        </div>
+        <div class="row mt-2 border-top">
+            <div class="col-4 inlinedIndex">
+                <ul class="list-unstyled">
+                    <li>
+                        <a href="{{ path('selectAnnonce', {'id': annonce.id }) }}"><h1>{{ annonce.annTitre }}</h1></a>
+                    </li>
+                </ul>
+            </div>
+            <div class="col-4 inlinedIndex">
+                <ul class="list-unstyled">
+                    <li>
+                        <h1>{{ annonce.annNbpieces }} pièces</h1>
+                    </li>
+                </ul>
+            </div>
+            <div class="col-4 inlinedIndex">
+                <ul class="list-unstyled">
+                    <li>
+                        <h1>{{ annonce.annPrix }} €</h1>
+                    </li>
+                </ul>
+            </div>
+            <div class="col-12 text-justify">
+                <h5>{{ annonce.annDescription }}</h5>
+            </div>
+        </div>
+
+    </div>
+
+{% endblock %}
