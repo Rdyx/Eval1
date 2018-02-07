@@ -55,13 +55,8 @@ class DefaultController extends Controller
             $data = $form->getData();
             $search = $data['search'];
             $searchTypeAnn = $data['searchTypeAnn'];
-            $query = $em->createQuery('
-            SELECT a FROM AppBundle:Annonce a JOIN a.typeAnn t WHERE t.type LIKE :sl AND a.annTitre LIKE :s
-            ')
-
-                ->setParameter('s', '%'.$search.'%')
-                ->setParameter('sl', '%'.$searchTypeAnn.'%');
-            $annonces = $query->getResult();
+            $annonces = $this->getDoctrine()
+                ->getRepository(Annonce::class)->search($em, $search, $searchTypeAnn);
         } else {
             $annonces = $em->getRepository('AppBundle:Annonce')->findAll();
         }

@@ -10,4 +10,13 @@ namespace AppBundle\Repository;
  */
 class AnnonceRepository extends \Doctrine\ORM\EntityRepository
 {
+    public function search($em, $search, $searchTypeAnn){
+        $query = $em->createQuery('
+            SELECT a FROM AppBundle:Annonce a JOIN a.typeAnn t WHERE t.type LIKE :sl AND a.annTitre LIKE :s
+            ')
+
+            ->setParameter('s', '%'.$search.'%')
+            ->setParameter('sl', '%'.$searchTypeAnn.'%');
+        return $query->getResult();
+    }
 }
