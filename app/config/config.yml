@@ -88,6 +88,12 @@ fos_user:
 easy_admin:
     site_name: 'Carcassonne Immo'
     design:
+        menu:
+        - { label: 'Accueil du site', url: 'http://127.0.0.1:8000' }
+        - User
+        - Annonce
+        - Client
+        - TypeAnnonce
         form_theme: vertical
     show:
         max_results: 20
